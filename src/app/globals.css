@@ -1,0 +1,250 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 96.1%; /* F5F5F5 Off-white */
+    --foreground: 0 0% 3.9%; /* Default dark text */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 210 70% 55%; /* Light Blue family - stronger for buttons */
+    --primary-foreground: 210 40% 98%; /* Near white */
+    --secondary: 0 0% 90%; /* Adjusted for off-white background */
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 92%; /* Adjusted for off-white background */
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 120 60% 60%; /* Soft Green */
+    --accent-foreground: 120 25% 10%; /* Dark green text for accent */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 210 70% 55%; /* Primary color for rings */
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 210 70% 60%; /* Adjusted for dark mode if needed */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 120 60% 55%; /* Adjusted for dark mode if needed */
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 210 70% 60%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* === PDF Capture Styles === */
+
+/* == Styles for capturing the ENTIRE hall assignments report (multiple halls) == */
+.pdf-capture-area {
+  background-color: #ffffff !important;
+  padding: 0.5rem !important; 
+  width: 1200px !important; /* Force width for html2canvas rendering for multi-column layout */
+  overflow: visible !important;
+}
+.pdf-capture-area > div { /* Direct children involved in layout */
+    overflow: visible !important;
+}
+/* Styles for CARDS WITHIN the multi-hall report capture area */
+.pdf-capture-area .card-print, /* Targets HallCard, AIFeedbackCard, UnallocatedStudentsCard if they have card-print */
+.pdf-capture-area .shadow-md, /* General shadow removal */
+.pdf-capture-area [class*="bg-card"] { /* General background card reset */
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+  border: 1px solid #dddddd !important; /* Light border for each card in the report */
+  padding: 0.25rem !important; /* Minimal padding for cards in the report */
+  overflow: visible !important;
+}
+.pdf-capture-area .CardHeader { padding-bottom: 0.1rem !important; }
+.pdf-capture-area .CardContent { padding-top: 0.1rem !important; }
+.pdf-capture-area .text-muted-foreground { color: #4A4A4A !important; }
+.pdf-capture-area .text-primary { color: #000000 !important; } /* Assuming primary color icons/text should be black */
+.pdf-capture-area .text-foreground { color: #000000 !important; }
+.pdf-capture-area .text-destructive { color: #D9534F !important; } /* Keep destructive text red */
+.pdf-capture-area .text-green-700 { color: #28A745 !important; } /* Keep green text for success */
+.pdf-capture-area .flex.flex-row.flex-wrap { width: 100% !important; overflow: visible !important; } /* For HallCard's column layout */
+.pdf-capture-area h3, /* Main "Hall Assignments" title in AllocationResultsDisplay */
+.pdf-capture-area .font-headline.text-xl, /* HallCard title, AI Card title */
+.pdf-capture-area .font-headline.text-2xl /* Potentially other large titles */
+ {
+  font-size: 11pt !important; 
+  color: #000000 !important;
+  margin-bottom: 0.2rem !important;
+}
+.pdf-capture-area .CardDescription { font-size: 8pt !important; color: #333333 !important; margin-bottom: 0.2rem !important; }
+.pdf-capture-area .table { margin-top: 0.2rem !important; }
+.pdf-capture-area .table th,
+.pdf-capture-area .table td {
+  color: #000000 !important;
+  border: 1px solid #eeeeee !important;
+  padding: 0.5px 1.5px !important; 
+  font-size: 7pt !important;
+  line-height: 1.0 !important;
+  white-space: nowrap; 
+}
+.pdf-capture-area .table th { font-weight: bold; }
+/* Hide individual hall download buttons when capturing the entire report */
+.pdf-capture-area .no-print-in-report-capture {
+  display: none !important;
+}
+
+
+/* == Styles for capturing an INDIVIDUAL HallCard (when .pdf-capture-current-hall is applied to it) == */
+.pdf-capture-current-hall {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  padding: 10mm !important; 
+  box-shadow: none !important;
+  border: none !important; 
+  /* width: auto !important; /* Let html2canvas use its natural width based on content for scaling */
+  /* height: auto !important; */
+  overflow: visible !important;
+}
+.pdf-capture-current-hall > .CardHeader, /* Target direct CardHeader of the captured card */
+.pdf-capture-current-hall > .CardContent { /* Target direct CardContent */
+  padding: 5mm !important; /* Generous padding within the single captured card */
+}
+.pdf-capture-current-hall > .CardHeader {
+  padding-bottom: 2mm !important;
+}
+/* Titles and text within the individually captured hall card */
+.pdf-capture-current-hall .font-headline.text-xl { /* HallCard title */
+  font-size: 16pt !important;
+  color: #000000 !important;
+  margin-bottom: 4mm !important;
+}
+.pdf-capture-current-hall .CardDescription {
+  font-size: 11pt !important;
+  color: #333333 !important;
+  margin-bottom: 4mm !important;
+}
+/* Table within the individually captured hall card */
+.pdf-capture-current-hall .table {
+  margin-top: 0.2rem !important;
+  width: 100% !important; /* Ensure table takes full width of its container */
+}
+.pdf-capture-current-hall .table th,
+.pdf-capture-current-hall .table td {
+  color: #000000 !important;
+  border: 1px solid #cccccc !important; 
+  padding: 1.5mm 2mm !important;    
+  font-size: 9pt !important;      
+  line-height: 1.3 !important;
+  white-space: normal !important; /* Allow text to wrap in cells */
+}
+.pdf-capture-current-hall .table th {
+  font-weight: bold;
+  background-color: #f0f0f0 !important; 
+}
+/* Ensure all text is black by default within this context unless specified */
+.pdf-capture-current-hall .text-muted-foreground,
+.pdf-capture-current-hall .text-primary, /* Icons, etc. */
+.pdf-capture-current-hall .text-foreground,
+.pdf-capture-current-hall span, 
+.pdf-capture-current-hall p,
+.pdf-capture-current-hall div { /* Broadly apply black text */
+  color: #000000 !important;
+}
+.pdf-capture-current-hall .text-muted-foreground { /* Specific muted still possible */
+   color: #555555 !important;
+}
+/* Ensure the flex container for columns also behaves for single card PDF */
+.pdf-capture-current-hall .flex.flex-row.flex-wrap { 
+  width: 100% !important; 
+  overflow: visible !important;
+}
+.pdf-capture-current-hall .px-2.print\:px-0\.5.mb-2 { /* Column container */
+  padding-left: 0 !important;
+  padding-right: 0 !important; /* No horizontal padding for columns in single PDF */
+}
+.pdf-capture-current-hall .hide-for-own-pdf { /* Hide the button that triggered this PDF */
+  display: none !important;
+}
+
+
+/* General print styles (from browser's print function, and for the main report PDF download) */
+@media print {
+  body {
+    font-size: 10pt;
+    color: #000;
+    background-color: #fff;
+  }
+  .no-print, .no-print-in-report-capture, .hide-for-own-pdf { /* General no-print and specific classes */
+    display: none !important;
+  }
+  .card-print { /* Used by AllocationResultsDisplay for its main capture area root */
+    border: 1px solid #ccc;
+    box-shadow: none;
+    page-break-inside: avoid;
+    background-color: #fff !important;
+    color: #000 !important;
+  }
+  .card-print .shadow-md { /* Cards within the .card-print area */
+    background-color: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+  .card-print .text-muted-foreground { color: #555 !important; }
+  .card-print .text-primary { color: #000 !important; }
+  table, th, td { border: 1px solid #ddd !important; }
+  th, td { padding: 1px !important; font-size: 7pt !important; }
+  h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
+}
+
